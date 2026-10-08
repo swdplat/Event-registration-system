@@ -1,0 +1,1150 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>智冠集團員工活動登記系統</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+	
+<link rel="stylesheet" href="css/L.css">
+<link rel="stylesheet" href="css/LM.css" media="only screen and (min-width:1280px) and (max-width:1680px)">
+<!-- jquery引入檔 -->
+<script src="js/jquery-3.7.1.min.js"></script>
+
+</head>
+<body>
+<header class="fe-header">
+    <div class="left">
+      <a href="#" data-page="list" class="fe-logo"><span class="mark"><img src="img/soft-world.webp"></span>智冠集團員工活動系統</a>
+    </div>
+  </header>
+
+<!--<div id="meta-nav">
+  <button id="tab1" data-page="login" class="active">員工登入頁</button>
+  <button id="tab2" data-page="list">活動列表頁</button>
+  <button id="tab3" data-page="content">活動內容頁</button>
+  <button id="tab4" data-page="checkout">訂單資訊頁</button>
+  <button id="tab4" data-page="orderlist">我的訂單</button>
+  <button id="tab6" data-page="orderdetail">訂單詳情頁</button>
+</div>-->
+
+<!-- ============================================================ -->
+<!-- 0. 員工登入頁 -->
+<!-- ============================================================ -->
+<section class="page active" id="page-login">
+  <div style="max-width:420px;margin:70px auto;padding:0 20px;">
+    <h1>員工登入</h1>
+    <p style="font-size:12.5px;color:var(--grey);margin:0 0 26px;">請輸入您的公司信箱以進行身份驗證，無需記憶密碼</p>
+
+    <label style="font-size:15px;font-weight:700;display:block;margin-bottom:8px;">公司 Email</label>
+    <input class="form-input" id="login-email" placeholder="name@soft-world.com.tw" oninput="validateEmail()" style="margin-bottom:6px;" />
+    <div id="login-email-error" style="display:none;font-size:12px;color:var(--red);margin-bottom:14px;">不支援的 Email 網域，請使用公司信箱。</div>
+    <div id="login-email-spacer" style="height:14px;"></div>
+
+    <button class="btn" style="width:100%;background:#dedede;border:1.3px solid var(--border);color:var(--navy-dark);padding:12px;font-size:13px;margin-bottom:22px;" onclick="requestOtp()">獲取 Email 一次性驗證碼 (OTP)</button>
+
+    <label style="font-size:15px;font-weight:700;display:block;margin-bottom:10px;">驗證碼 (OTP)</label>
+    <div style="display:flex;gap:9px;margin-bottom:10px;" id="otp-boxes">
+      <input class="otp-box" maxlength="1" value="">
+      <input class="otp-box" maxlength="1" value="">
+      <input class="otp-box" maxlength="1" value="">
+      <input class="otp-box" maxlength="1" value="">
+      <input class="otp-box" maxlength="1" value="">
+      <input class="otp-box" maxlength="1" value="">
+    </div>
+    <div style="font-size:12px;color:var(--grey-light);margin-bottom:22px;">驗證碼有效期限 5 分鐘，逾期請重新發送</div>
+
+    <button class="btn btn-primary" style="width:100%;background:#3c5c9e;padding:18px;font-size:15px;" onclick="go('list')">驗證身份並登入</button>
+  </div>
+  <div id="copyright">© Soft-World International Corporation. All Rights Reserved.</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 1. 活動列表頁 -->
+<!-- ============================================================ -->
+<section class="page" id="page-list">
+  <header class="fe-header">
+    <div class="left">
+      <a href="#" data-page="list" class="fe-logo"><span class="mark"><img src="img/soft-world.webp"></span>智冠集團員工活動系統</a>
+    </div>
+    <div class="right">王小明 (soft-world.com.tw)<span class="sep">|</span><a href="#" data-page="orderlist">我的訂單</a><span class="sep">|</span><a href="#" data-page="login">登出</a></div>
+  </header>
+  <div class="fe-body">
+    <h2 class="section-title">進行中活動</h2>
+    <hr class="list-divider" />
+    <div class="search-bar" style="margin-bottom:22px;">
+      <img src="img/search_icon.svg"><input type="text" class="input-box" style="flex:1;min-width:220px;gap:7px;" placeholder="搜尋活動名稱關鍵字…" >
+	</div>
+	<div class="act-all">
+	  <li class="act-box" id="act01">
+		<div id="tag-open">開放登記中</div>
+		<div class="photo"><img src="img/act02.jpg"></div>
+		<div class="title">2026 中秋大巨蛋球賽領票</div>
+		<div class="date"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg>&nbsp;2026-09-01 09:00:00 到 2026-09-15 18:00:00</div>
+		<div class="place"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><path d="M12 21s7-7.1 7-12a7 7 0 10-14 0c0 4.9 7 12 7 12z"/><circle cx="12" cy="9" r="2.3"/></svg>&nbsp;台北大巨蛋</div>
+		<div class="bottom-item">
+		  <div class="status">剩餘 <span class="amount">12</span> 張</div>  
+		  <div class="btn-check">查看詳情</div>
+		</div>
+	  </li>
+	  <dl class="act-box" id="act02">
+		<div id="tag-full">已額滿</div>
+		<div class="photo"><img src="img/act01.jpg"></div>
+		<div class="title">2026 中華職棒總冠軍戰 主場加油團</div>
+		<div class="date"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg>&nbsp;2026-09-01 09:00:00 到 2026-09-15 18:00:00</div>
+		<div class="place"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><path d="M12 21s7-7.1 7-12a7 7 0 10-14 0c0 4.9 7 12 7 12z"/><circle cx="12" cy="9" r="2.3"/></svg>&nbsp;台中洲際棒球場</div>
+		<div class="bottom-item">
+		  <div class="status"><span class="amount">配額已無剩餘數量</span></div>  
+		  <div class="btn-full">已額滿</div>
+		</div>
+	  </dl>
+		
+	  <li class="act-box" id="act03">
+		<div id="tag-not-open">尚未開放</div>
+		<div class="photo"><img src="img/act03.jpg"></div>
+		<div class="title">秋季員工烤肉包場之夜</div>
+		<div class="date"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg>&nbsp;2026-09-01 09:00:00 到 2026-09-15 18:00:00</div>
+		<div class="place"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><path d="M12 21s7-7.1 7-12a7 7 0 10-14 0c0 4.9 7 12 7 12z"/><circle cx="12" cy="9" r="2.3"/></svg>&nbsp;某某某燒肉店</div>
+		<div class="bottom-item">
+		  <div class="status"><span class="amount">剩餘 <span class="amount">50</span> 張</span></div>  
+		  <div class="btn-not-open">尚未開放</div>
+		</div>
+	  </li>
+	  <dl class="act-box" id="act04">
+		<div id="tag-open">開放登記中</div>
+		<div class="photo"><img src="img/act04.jpg"></div>
+		<div class="title">秋季員工電影包場之夜</div>
+		<div class="date"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg>&nbsp;2026-09-01 09:00:00 到 2026-09-15 18:00:00</div>
+		<div class="place"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><path d="M12 21s7-7.1 7-12a7 7 0 10-14 0c0 4.9 7 12 7 12z"/><circle cx="12" cy="9" r="2.3"/></svg>&nbsp;台北大巨蛋</div>
+		<div class="bottom-item">
+		  <div class="status">剩餘 <span class="amount">12</span> 張</div>  
+		  <div class="btn-check">查看詳情</div>
+		</div>
+	  </dl>
+	</div>  
+  </div>
+  <div id="copyright">© Soft-World International Corporation. All Rights Reserved.</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 2. 活動內容頁 -->
+<!-- ============================================================ -->
+<section class="page" id="page-content">
+  <header class="fe-header">
+    <div class="left">
+      <a href="#" data-page="list" class="fe-logo"><span class="mark"><img src="img/soft-world.webp"></span>智冠集團員工活動系統</a>
+
+    </div>
+    <div class="right">王小明 (soft-world.com.tw)<span class="sep">|</span><a href="#" data-page="orderlist">我的訂單</a><span class="sep">|</span><a href="#" data-page="login">登出</a></div>
+  </header>
+  <div class="fe-body" style="padding-bottom:30px;">
+    <div class="ac-grid">
+      <div class="poster"><img src="img/act02.jpg"></div>
+      <div class="goods">
+        <h1 class="ac-title">2026 中秋大巨蛋球賽領票</h1>
+        <div class="tag-row">
+          <span class="tag" id="act-status-tag">開放登記中</span>
+        </div>
+        <hr class="ac-divider" />
+        <div class="info-row"><span class="label">活動時間</span><span class="value">2026-09-01 09:00:00 到 2026-09-15 18:00:00</span></div>
+        <div class="info-row"><span class="label">場館</span><span class="value">台北大巨蛋</span></div>
+        <hr class="ac-divider" />
+        <div id="ac-notice-banner" style="display:none;background:#b7c5e2;border:1px solid var(--amber-tag);color:var(--blue);border-radius:8px;padding:12px 16px;font-size:12px;font-weight:700;text-align:center;margin-bottom:16px;"></div>
+        <div class="field-label">票券選擇</div>
+        <div id="ticket-list"></div>
+
+        <hr class="ac-divider" />
+        <div class="total-row"><span class="lbl">所選商品總金額</span><span class="amt" id="total-amt">NT$ 0</span></div>
+        <button class="checkout-main-btn" onclick="goCheckout()">前往結帳</button>
+      </div>
+    </div>
+
+    <div class="detail-card">
+      <div class="detail-head" style="display:flex;align-items:center;gap:7px;">活動詳情</div>
+      <div class="detail-body">
+        <div class="detail-text" style="line-height:1.9;margin:0;">
+          <p style="margin:0 0 12px;">歡迎參加 2026 年集團中秋節慶祝活動──大巨蛋球賽包場企業日！本次活動由集團包下台北大巨蛋部分內野座位區，邀請全體同仁與眷屬一同進場為主場球隊加油。現場備有中秋應景小禮及冷氣消暑飲品，讓大家度過涼爽熱鬧的中秋夜晚，歡迎攜眷參加！</p>
+          <ol style="padding-left:18px;margin:0 0 12px;">
+            <li>每人限領取員工票 2 張、眷屬票 1 張，超過配額將無法送出申請。</li>
+            <li>完成登記並付款後，票券將於活動前 3 日發送至登記信箱。</li>
+            <li>若因故無法出席，請於活動開始前 3 日辦理取消，逾期恕不受理。</li>
+          </ol>
+          <p style="margin:0;">台北大巨蛋鄰近捷運國父紀念館站（藍線）2 號出口，步行約 5 分鐘可達；亦設有付費停車場，惟連假車位有限，建議優先搭乘大眾運輸工具前往。請於開賽前 30 分鐘至 3 號入口集合，並出示電子票券完成驗票入場。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="copyright">© Soft-World International Corporation. All Rights Reserved.</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 3. 訂單資訊頁 -->
+<!-- ============================================================ -->
+<section class="page" id="page-checkout">
+  <header class="fe-header">
+    <div class="left">
+      <a href="#" data-page="list" class="fe-logo"><span class="mark"><img src="img/soft-world.webp"></span>智冠集團員工活動系統</a>
+    </div>
+    <div class="right">王小明 (soft-world.com.tw)<span class="sep">|</span><a href="#" data-page="orderlist">我的訂單</a><span class="sep">|</span><a href="#" data-page="login">登出</a></div>
+  </header>
+  <div class="fe-body">
+    <div class="oi-card">
+      <div class="oi-title">訂單資訊</div>
+      <div class="oi-row"><span>訂購 Email</span><b id="oi-email">name@soft-world.com.tw</b></div>
+      <div class="prod-head"><span class="name">商品</span><span class="unit">單價</span><span class="qty">數量</span><span class="sub-amt">小計</span></div>
+      <div id="prod-rows"></div>
+
+      <div class="pay-card">
+        <div class="ttl">訂購人資訊</div>
+        <div class="buyer-grid">
+          <div>
+            <div class="pay-sub">姓名 <span style="color:var(--orange);">＊</span></div>
+            <input class="form-input" id="buyer-name" placeholder="請輸入姓名" oninput="validateBuyerField('name')" />
+            <div class="field-err" id="buyer-name-err"></div>
+          </div>
+          <div>
+            <div class="pay-sub">員工編號 <span style="color:var(--orange);">＊</span></div>
+            <input class="form-input" id="buyer-empid" placeholder="例：SW01234" oninput="validateBuyerField('empid')" />
+            <div class="field-err" id="buyer-empid-err"></div>
+          </div>
+          <div>
+            <div class="pay-sub">電話號碼 <span style="color:var(--orange);">＊</span></div>
+            <input class="form-input" id="buyer-phone" placeholder="例：0912345678" oninput="validateBuyerField('phone')" />
+            <div class="field-err" id="buyer-phone-err"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pay-card">
+        <div class="ttl">付款方式</div>
+        <div class="pay-sub">付款金流 <span style="color:var(--orange);">＊</span></div>
+        <select class="pay-select">
+          <option>銀行轉帳</option>
+        </select>
+      </div>
+
+      <div class="pay-card">
+        <div class="ttl">發票資訊</div>
+        <div class="invoice-tabs">
+          <div class="invoice-tab" data-tab="donate" onclick="setInvoiceTab('donate')">捐贈發票</div>
+          <div class="invoice-tab active" data-tab="cloud" onclick="setInvoiceTab('cloud')">雲端發票</div>
+          <div class="invoice-tab" data-tab="corp" onclick="setInvoiceTab('corp')">公司用</div>
+        </div>
+        <div id="invoice-extra" style="display:none;">
+          <div class="pay-sub">捐贈機關</div>
+          <select class="pay-select" id="inv-donate"><option>愛鄰協會</option><option>創世基金會</option><option>兒福聯盟</option></select>
+        </div>
+        <div id="invoice-cloud">
+          <div class="pay-sub">選擇載具類型 <span style="color:var(--orange);">＊</span></div>
+          <select class="pay-select" id="inv-carrier" onchange="setCarrier()">
+            <option value="none">沒有共通性載具</option>
+            <option value="barcode">手機條碼</option>
+            <option value="cert">自然人憑證</option>
+          </select>
+
+          <div id="inv-carrier-none">
+            <div class="inv-field">
+              <div class="pay-sub">姓名 <span style="color:var(--orange);">＊</span></div>
+              <input class="form-input" id="inv-name" placeholder="例如：王大明" oninput="this.dataset.touched=1;validateInvField('inv-name')" />
+              <div class="field-err" id="inv-name-err"></div>
+            </div>
+            <div class="inv-field">
+              <div class="pay-sub">台灣連絡電話 <span style="color:var(--orange);">＊</span></div>
+              <input class="form-input" id="inv-phone" placeholder="例如：0912345678" oninput="this.dataset.touched=1;validateInvField('inv-phone')" />
+              <div class="field-err" id="inv-phone-err"></div>
+            </div>
+            <div class="inv-field">
+              <div class="pay-sub">電子郵件</div>
+              <input class="form-input" id="inv-email" value="name@soft-world.com.tw" readonly />
+              <div style="font-size:10.5px;color:var(--grey-light);margin-top:6px;">帶入員工 Email，發票將以此信箱歸戶並寄送開立通知</div>
+              <div class="field-err" id="inv-email-err"></div>
+            </div>
+            <div class="inv-field">
+              <div class="pay-sub">發票寄送地址 <span style="color:var(--orange);">＊</span></div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+                <select class="pay-select" id="inv-city" onchange="onCityChange('inv')"></select>
+                <select class="pay-select" id="inv-district" onchange="validateInvField('inv-district')"><option value="">請選擇</option></select>
+              </div>
+              <div class="field-err" id="inv-city-err"></div>
+              <div class="field-err" id="inv-district-err"></div>
+            </div>
+            <div class="inv-field">
+              <div class="pay-sub">街道路名 <span style="color:var(--orange);">＊</span></div>
+              <input class="form-input" id="inv-street" placeholder="請完整填寫街道路名" oninput="validateInvField('inv-street')" />
+              <div class="field-err" id="inv-street-err"></div>
+            </div>
+          </div>
+
+          <div id="inv-carrier-barcode" style="display:none;">
+            <div class="inv-field">
+              <div class="pay-sub">手機條碼 <span style="color:var(--orange);">＊</span></div>
+              <input class="form-input" id="inv-barcode" placeholder="例如：/ABC+123" oninput="validateInvField('inv-barcode')" />
+              <div class="field-err" id="inv-barcode-err"></div>
+            </div>
+          </div>
+
+          <div id="inv-carrier-cert" style="display:none;">
+            <div class="inv-field">
+              <div class="pay-sub">自然人憑證 <span style="color:var(--orange);">＊</span></div>
+              <input class="form-input" id="inv-cert" placeholder="例如：AB12345678901234（2 碼大寫英文＋14 碼數字）" oninput="validateInvField('inv-cert')" />
+              <div class="field-err" id="inv-cert-err"></div>
+            </div>
+          </div>
+        </div>
+        <div id="invoice-corp" style="display:none;">
+          <div class="inv-field">
+            <div class="pay-sub">電子郵件 <span style="color:var(--orange);">＊</span></div>
+            <input class="form-input" id="corp-email" value="name@soft-world.com.tw" placeholder="請輸入電子郵件" oninput="validateInvField('corp-email')" />
+            <div style="font-size:10.5px;color:var(--grey-light);margin-top:6px;">預設帶入員工 Email，可改為財務／會計信箱，開立通知將寄送至此</div>
+            <div class="field-err" id="corp-email-err"></div>
+          </div>
+          <div class="inv-field">
+            <div class="pay-sub">公司抬頭 <span style="color:var(--orange);">＊</span></div>
+            <input class="form-input" id="corp-title" placeholder="請輸入公司抬頭" oninput="validateInvField('corp-title')" />
+            <div class="field-err" id="corp-title-err"></div>
+          </div>
+          <div class="inv-field">
+            <div class="pay-sub">統一編號 <span style="color:var(--orange);">＊</span></div>
+            <input class="form-input" id="corp-taxid" maxlength="8" inputmode="numeric" placeholder="請輸入統一編號（8 碼）" oninput="validateInvField('corp-taxid')" />
+            <div class="field-err" id="corp-taxid-err"></div>
+          </div>
+          <div class="inv-field">
+            <div class="pay-sub">發票寄送地址 <span style="color:var(--orange);">＊</span></div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+              <select class="pay-select" id="corp-city" onchange="onCityChange('corp')"></select>
+              <select class="pay-select" id="corp-district" onchange="validateInvField('corp-district')"><option value="">請選擇</option></select>
+            </div>
+            <div class="field-err" id="corp-city-err"></div>
+            <div class="field-err" id="corp-district-err"></div>
+          </div>
+          <div class="inv-field">
+            <div class="pay-sub">街道路名 <span style="color:var(--orange);">＊</span></div>
+            <input class="form-input" id="corp-street" placeholder="請完整填寫街道路名" oninput="validateInvField('corp-street')" />
+            <div class="field-err" id="corp-street-err"></div>
+          </div>
+          <div style="font-size:10.5px;color:var(--grey-light);margin-top:12px;">＊ 公司用（三聯式）發票開立後無法更改統一編號與抬頭，請務必確認</div>
+        </div>
+      </div>
+
+      <label class="remember-row">
+        <input type="checkbox" id="remember-checkout" />
+        <span>本人同意記住結帳資訊，以利下次支付。</span>
+      </label>
+
+      <div class="oi-summary">
+        <div class="oi-total"><span>商品總金額</span><span id="oi-sum-goods">NT$0</span></div>
+        <div class="oi-total main"><span>應付金額</span><span id="oi-sum-payable">NT$0</span></div>
+      </div>
+      <button class="pay-confirm-btn" id="confirm-pay-btn" onclick="confirmOrder()">確認付款 NT$ 0</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 3b. 我的訂單（訂單列表頁） -->
+<!-- ============================================================ -->
+<section class="page" id="page-orderlist">
+  <header class="fe-header">
+    <div class="left">
+      <a href="#" data-page="list" class="fe-logo"><span class="mark"><img src="img/soft-world.webp"></span>智冠集團員工活動系統</a>
+    </div>
+    <div class="right">王小明 (soft-world.com.tw)<span class="sep">|</span><a href="#" data-page="orderlist">我的訂單</a><span class="sep">|</span><a href="#" data-page="login">登出</a></div>
+  </header>
+  <div class="fe-body">
+    <h2 class="section-title" style="margin-bottom:16px;">我的訂單</h2>
+    <div class="ol-tabs" id="ol-tabs"></div>
+    <div id="ol-list"></div>
+    <div class="pagination" style="justify-content:center;margin-top:24px;"><button>‹</button><button class="active">1</button><button>2</button><button>3</button><button>4</button><button>›</button></div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 4. 訂單詳情頁 -->
+<!-- ============================================================ -->
+<section class="page" id="page-orderdetail">
+  <header class="fe-header">
+    <div class="left">
+      <a href="#" data-page="list" class="fe-logo"><span class="mark"><img src="img/soft-world.webp"></span>智冠集團員工活動系統</a>
+    </div>
+    <div class="right">王小明 (soft-world.com.tw)<span class="sep">|</span><a href="#" data-page="orderlist">我的訂單</a><span class="sep">|</span><a href="#" data-page="login">登出</a></div>
+  </header>
+  <div class="fe-body">
+    <div class="od-wrap">
+      <div class="od-card">
+        <div class="od-status" id="od-status">
+          <div class="icon" id="od-icon"></div>
+          <div><div class="label" id="od-label"></div><div class="orderno">訂單編號　ORD-20260908-0012</div></div>
+        </div>
+        <div class="od-sec-title">票券明細</div>
+        <div class="od-ticket-row">
+          <div class="sw"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="14" rx="2"/><circle cx="15" cy="9" r="1.3"/><path d="M3 15.5l4.5-4.5 3 3 3.5-3.5 5.5 5.5"/></svg></div>
+          <div style="flex:1;"><div class="name">員工票－內野</div><div class="sub">2026 中秋大巨蛋球賽領票</div></div>
+          <div class="mid">NT$230</div><div class="mid">1</div><div class="sub-amt">NT$230</div>
+        </div>
+        <hr class="ac-divider" />
+        <div class="od-sec-title">費用與付款資訊</div>
+        <div class="od-feerow"><span>票款小計</span><b>NT$230</b></div>
+        <div class="od-feerow total" id="od-total-row"><span id="od-total-label">實付金額</span><b id="od-total-amt">NT$230</b></div>
+        <div id="od-pay-rows"></div>
+        <div class="od-note" id="od-note" style="display:none;"></div>
+        <div class="od-btns" id="od-btns"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+<!-- ===== Modals ===== -->
+<div class="modal-overlay" id="modal-add-domain">
+  <div class="modal-box" style="text-align:left;">
+    <h3>新增白名單網域</h3>
+    <div class="sub" style="margin-bottom:16px;">僅白名單內網域的員工信箱可完成登入驗證</div>
+    <div class="form-field">
+      <label>網域 <span class="req">＊</span></label>
+      <input class="form-input" id="dm-domain" placeholder="例：@newcompany.com.tw" oninput="validateDomainInput()" />
+      <div class="field-err" id="dm-domain-err"></div>
+    </div>
+    <div class="form-field">
+      <label>公司名稱 <span class="req">＊</span></label>
+      <input class="form-input" id="dm-company" placeholder="例：智冠科技" oninput="validateCompanyInput()" />
+      <div class="field-err" id="dm-company-err"></div>
+    </div>
+    <div style="font-size:10.5px;color:var(--grey-light);margin-bottom:6px;">＊ 需為合法網域格式，重複網域將無法新增</div>
+    <div class="modal-btns">
+      <button class="btn" style="background:#fff;border:1px solid var(--border);color:var(--grey);" onclick="closeModal('modal-add-domain')">取消</button>
+      <button class="btn btn-primary" style="background:var(--navy);" onclick="confirmAddDomain()">確認新增</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-cancel-order">
+  <div class="modal-box">
+    <div class="modal-icon">！</div>
+    <h3>確定要取消此訂單嗎？</h3>
+    <div class="sub">訂單編號　ORD-20260908-0012</div>
+    <p>取消後，此訂單將無法復原，若已完成部分付款將依公司退款規範處理。確定要取消嗎？</p>
+    <div class="modal-btns">
+      <button class="btn" style="background:#fff;border:1px solid var(--border);color:var(--grey);" onclick="closeModal('modal-cancel-order')">再想想</button>
+      <button class="btn btn-primary" onclick="confirmCancelOrder()">確認取消訂單</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-unpublish">
+  <div class="modal-box">
+    <div class="modal-icon">！</div>
+    <h3>確定要下架此活動嗎？</h3>
+    <div class="sub" id="modal-unpublish-name"></div>
+    <p>下架後，前台將立即隱藏本活動，員工將無法繼續報名或領票。此動作可隨時重新上架恢復。</p>
+    <div class="modal-btns">
+      <button class="btn" style="background:#fff;border:1px solid var(--border);color:var(--grey);" onclick="closeModal('modal-unpublish')">取消</button>
+      <button class="btn btn-primary">確認下架</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-add-product">
+  <div class="modal-box" style="max-width:640px;max-height:86vh;overflow-y:auto;text-align:left;">
+    <h3 id="ap-modal-title">新增商品</h3>
+    <div class="sub" id="ap-modal-sub" style="margin-bottom:16px;">設定商品基本資訊，並依公司別設定對象與階層配額</div>
+
+    <div id="ap-fields">
+      <div class="form-field">
+        <label>商品名稱 <span class="req">＊</span></label>
+        <input class="form-input" id="ap-name" value="一般票" />
+      </div>
+      <div class="form-field">
+        <label>商品價格 <span class="req">＊</span></label>
+        <input class="form-input" id="ap-price" value="230" />
+      </div>
+
+      <div class="form-field">
+        <label>商品總數量額度 <span class="req">＊</span></label>
+        <input class="form-input" id="ap-total" value="300" inputmode="numeric" oninput="validateApTotal()" />
+        <div class="field-err" id="ap-total-err"></div>
+        <div style="font-size:10.5px;color:var(--grey-light);margin-top:6px;">此商品可發放的總張數；下方各公司「總數量限制」加總不可超過此額度</div>
+      </div>
+
+      <div class="form-field" style="margin-bottom:8px;">
+        <label style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">適用公司別 <span class="req">＊</span>
+          <span class="toggle" id="ap-all-toggle" onclick="toggleApAll()"><span class="knob"></span></span>
+          <span id="ap-all-label" style="font-size:11.5px;color:var(--grey-light);font-weight:400;">依公司別設定</span>
+        </label>
+        <div style="font-size:10.5px;color:var(--grey-light);">開啟後不分公司別：白名單內所有網域的員工都可以購買，共用商品總數量額度，先搶先得</div>
+      </div>
+
+      <div id="ap-company-section">
+        <div class="form-field">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+            <label style="font-weight:500;color:var(--grey);margin:0;">選擇公司（可複選，勾選後展開配額設定）</label>
+            <button type="button" class="select-all-btn" id="ap-select-all" onclick="toggleAllCompanies()">全選</button>
+          </div>
+          <div id="ap-company-checks"></div>
+          <div class="field-err" id="ap-company-err"></div>
+        </div>
+
+        <div class="form-field">
+          <label style="margin-bottom:4px;">公司配額列表</label>
+          <table class="quota-table">
+            <thead><tr><th>公司別</th><th>該公司總數量限制
+              <span class="help-wrap">
+                <button type="button" class="help-btn" aria-label="說明">?</button>
+                <span class="help-tip">填寫 0 表示該公司不限制額度，僅受「商品總數量額度」限制，先搶先得</span>
+              </span>
+            </th><th style="color:var(--green);">單一帳號免費票數量</th><th style="color:var(--orange);">單一帳號自費票數量</th></tr></thead>
+            <tbody id="quota-body"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div id="ap-all-section" style="display:none;">
+        <div class="form-field">
+          <label style="margin-bottom:8px;">單一帳號購買額度（所有符合白名單網域的帳號皆適用）</label>
+          <div class="form-row2">
+            <div>
+              <div style="font-size:10.5px;font-weight:700;color:var(--green);margin-bottom:6px;">單一帳號免費票數量</div>
+              <input class="form-input" id="ap-all-free" value="1" inputmode="numeric" oninput="validateApAll()" />
+            </div>
+            <div>
+              <div style="font-size:10.5px;font-weight:700;color:var(--orange);margin-bottom:6px;">單一帳號自費票數量</div>
+              <input class="form-input" id="ap-all-paid" value="1" inputmode="numeric" oninput="validateApAll()" />
+            </div>
+          </div>
+          <div class="field-err" id="ap-all-err"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-btns">
+      <button class="btn" style="background:#fff;border:1px solid var(--border);color:var(--grey);" onclick="closeModal('modal-add-product')" id="ap-cancel-btn">取消</button>
+      <button class="btn btn-primary" style="background:var(--navy);" onclick="confirmAddProduct()" id="ap-confirm-btn">確認新增商品</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-export">
+  <div class="modal-box">
+    <h3>匯出活動報表</h3>
+    <div class="sub" id="modal-export-name"></div>
+    <div class="form-field" style="margin-top:14px;">
+      <label>匯出公司範圍 <span class="req">＊</span></label>
+      <select class="form-input" id="export-company"></select>
+    </div>
+    <div class="modal-btns">
+      <button class="btn" style="background:#fff;border:1px solid var(--border);color:var(--grey);" onclick="closeModal('modal-export')">取消</button>
+      <button class="btn btn-primary" style="background:var(--navy);">確認匯出</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+<div id="dp-pop"></div>
+
+<script>
+let toastTimer = null;
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(()=>t.classList.remove('show'), 2200);
+}
+/* ============ 日曆選擇元件（點輸入框即展開，不需點小日曆圖示） ============ */
+const DP = { input:null, mode:'date', y:0, m:0, selY:0, selM:0, selD:0, hh:'09', mm:'00' };
+const dpP2 = n => String(n).padStart(2,'0');
+function dpOpen(inp){
+  DP.input = inp; DP.mode = inp.dataset.dp;
+  const m = (inp.value||'').match(/^(\d{4})-(\d{2})-(\d{2})(?:[ T](\d{2}):(\d{2}))?/);
+  const base = m ? new Date(+m[1], +m[2]-1, +m[3]) : new Date();
+  DP.y = base.getFullYear(); DP.m = base.getMonth();
+  if(m){ DP.selY=+m[1]; DP.selM=+m[2]-1; DP.selD=+m[3]; DP.hh = m[4]||'09'; DP.mm = m[5]||'00'; }
+  else { DP.selY = 0; DP.hh = '09'; DP.mm = '00'; }
+  dpRender();
+  const pop = document.getElementById('dp-pop');
+  pop.classList.add('show');
+  const r = inp.getBoundingClientRect(), ph = pop.offsetHeight, pw = pop.offsetWidth;
+  let top = r.bottom + 6; if(top + ph > window.innerHeight - 8) top = Math.max(8, r.top - ph - 6);
+  let left = Math.min(r.left, window.innerWidth - pw - 8);
+  pop.style.top = top + 'px'; pop.style.left = Math.max(8,left) + 'px';
+}
+function dpClose(){ document.getElementById('dp-pop').classList.remove('show'); DP.input = null; }
+function dpRender(){
+  const first = new Date(DP.y, DP.m, 1), startDow = first.getDay(), dim = new Date(DP.y, DP.m+1, 0).getDate();
+  const prevDim = new Date(DP.y, DP.m, 0).getDate(), today = new Date();
+  let cells = '';
+  for(let i=0;i<42;i++){
+    let d, mo = DP.m, y = DP.y, other = false;
+    if(i < startDow){ d = prevDim - startDow + i + 1; mo = DP.m-1; other = true; }
+    else if(i >= startDow + dim){ d = i - startDow - dim + 1; mo = DP.m+1; other = true; }
+    else d = i - startDow + 1;
+    const dt = new Date(y, mo, d);
+    const isSel = dt.getFullYear()===DP.selY && dt.getMonth()===DP.selM && dt.getDate()===DP.selD;
+    const isToday = dt.getFullYear()===today.getFullYear() && dt.getMonth()===today.getMonth() && dt.getDate()===today.getDate();
+    cells += `<button type="button" class="dp-day ${other?'other':''} ${isToday?'today':''} ${isSel?'sel':''}" onclick="dpPick(${dt.getFullYear()},${dt.getMonth()},${dt.getDate()})">${d}</button>`;
+  }
+  const wk = ['日','一','二','三','四','五','六'].map(w=>`<div class="dp-wk">${w}</div>`).join('');
+  const hours = Array.from({length:24},(_,i)=>`<option ${dpP2(i)===DP.hh?'selected':''}>${dpP2(i)}</option>`).join('');
+  const mins = Array.from({length:60},(_,i)=>`<option ${dpP2(i)===DP.mm?'selected':''}>${dpP2(i)}</option>`).join('');
+  const time = DP.mode==='datetime' ? `<div class="dp-time"><span style="color:var(--grey);">時間</span>
+      <select onchange="DP.hh=this.value">${hours}</select>：<select onchange="DP.mm=this.value">${mins}</select>
+      <button type="button" class="dp-ok" onclick="dpConfirm()">確定</button></div>` : '';
+  document.getElementById('dp-pop').innerHTML = `
+    <div class="dp-head"><button type="button" class="dp-nav" onclick="dpNav(-1)">‹</button><b>${DP.y} 年 ${DP.m+1} 月</b><button type="button" class="dp-nav" onclick="dpNav(1)">›</button></div>
+    <div class="dp-grid">${wk}${cells}</div>
+    ${time}
+    <div class="dp-foot"><button type="button" onclick="dpToday()">今天</button><button type="button" onclick="dpClear()">清除</button></div>`;
+}
+function dpNav(d){ DP.m += d; if(DP.m<0){DP.m=11;DP.y--;} if(DP.m>11){DP.m=0;DP.y++;} dpRender(); }
+function dpPick(y,m,d){
+  DP.selY=y; DP.selM=m; DP.selD=d; DP.y=y; DP.m=m;
+  if(DP.mode==='date') dpCommit(); else dpRender();
+}
+function dpToday(){ const t = new Date(); dpPick(t.getFullYear(), t.getMonth(), t.getDate()); }
+function dpConfirm(){
+  if(!DP.selY){ const t = new Date(); DP.selY=t.getFullYear(); DP.selM=t.getMonth(); DP.selD=t.getDate(); }
+  dpCommit();
+}
+function dpCommit(){
+  const inp = DP.input; if(!inp) return;
+  const date = `${DP.selY}-${dpP2(DP.selM+1)}-${dpP2(DP.selD)}`;
+  inp.value = DP.mode==='datetime' ? `${date} ${DP.hh}:${DP.mm}` : date;
+  inp.dispatchEvent(new Event('change', {bubbles:true}));
+  dpClose();
+}
+function dpClear(){
+  const inp = DP.input; if(!inp) return;
+  inp.value = ''; inp.dispatchEvent(new Event('change', {bubbles:true})); dpClose();
+}
+document.addEventListener('click', e=>{
+  const inp = e.target.closest && e.target.closest('input[data-dp]');
+  if(inp){ dpOpen(inp); return; }
+  if(e.target.closest && (e.target.closest('#dp-pop') || e.target.closest('.date-input'))) return;
+  dpClose();
+});
+// 彈層內的點擊不往上傳：切換月份／選日期時會重繪內容，被點的按鈕已脫離 DOM，若傳到 document 會被誤判成「點到外面」而關閉
+document.getElementById('dp-pop').addEventListener('click', e=>e.stopPropagation());
+document.addEventListener('keydown', e=>{ if(e.key==='Escape') dpClose(); });
+window.addEventListener('resize', dpClose);
+window.addEventListener('scroll', dpClose, true);
+
+/* ============ 導覽切換 ============ */
+function go(page){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+page).classList.add('active');
+  document.querySelectorAll('#meta-nav button[data-page]').forEach(b=>b.classList.toggle('active', b.dataset.page===page));
+  window.scrollTo({top:0,behavior:'instant'});
+  if(page === 'checkout') renderCheckout();
+  if(page === 'orderlist') renderOrderList();
+  if(page === 'content'){
+    if(typeof renderTickets === 'function') renderTickets();
+    if(typeof applyContentState === 'function') applyContentState();
+  }
+}
+document.querySelectorAll('#meta-nav button[data-page]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.page)));
+document.querySelectorAll('a[data-page]').forEach(a=>a.addEventListener('click',(e)=>{e.preventDefault();go(a.dataset.page);}));
+
+/* ============ 活動列表：點擊指定 act-box 開啟活動內容頁 ============ */
+const ACT_BOX_STATES = {
+  act01: 'open',
+  act02: 'full',
+  act03: 'not_started',
+  act04: 'open'
+};
+
+function openActivityById(id){
+  const state = ACT_BOX_STATES[id];
+  if(!state) return;
+
+  // 關閉活動列表頁 page-list
+  document.getElementById('page-list').classList.remove('active');
+
+  // 開啟活動內容頁 page-content
+  document.getElementById('page-content').classList.add('active');
+
+  // 保留活動狀態並重新建立票券內容
+  CONTENT_STATE = state;
+  if(typeof renderTickets === 'function') renderTickets();
+  applyContentState();
+  window.scrollTo({top:0, behavior:'instant'});
+}
+
+['act01','act02','act03','act04'].forEach(id=>{
+  const actBox = document.getElementById(id);
+  if(actBox){
+    actBox.style.cursor = 'pointer';
+    actBox.addEventListener('click', ()=>openActivityById(id));
+  }
+});
+
+/* ============ 活動列表：點擊任一活動卡片進入活動內容頁 ============ */
+document.querySelectorAll('#page-list .act-box').forEach(card=>{
+  card.style.cursor = 'pointer';
+  card.addEventListener('click', (e)=>{
+    // 點擊卡片任何位置都進入活動內容頁
+    // 若未來卡片內有按鈕，可由按鈕自行處理，不重複觸發卡片事件
+    if(e.target.closest('button, a, input, select')) return;
+
+    const id = card.id;
+    const state = id === 'act02' ? 'full' : (id === 'act03' ? 'not_started' : 'open');
+    viewActivityContent(state);
+  });
+});
+
+/* ============ 0. 員工登入頁 ============ */
+const ALLOWED_DOMAINS = ['soft-world.com.tw','gamefirst.com.tw','mail.gameflier.com.tw'];
+function validateEmail(){
+  const val = document.getElementById('login-email').value.trim();
+  const errEl = document.getElementById('login-email-error');
+  const spacer = document.getElementById('login-email-spacer');
+  if(!val){ errEl.style.display='none'; spacer.style.display='block'; return; }
+  const domain = val.split('@')[1] || '';
+  const ok = ALLOWED_DOMAINS.includes(domain);
+  errEl.style.display = ok ? 'none' : 'block';
+  spacer.style.display = ok ? 'block' : 'none';
+}
+function requestOtp(){
+  document.querySelectorAll('#otp-boxes .otp-box').forEach(b=>{
+    b.value='';
+    b.classList.remove('otp-focus');
+  });
+}
+
+/* ============ 1. 活動列表頁 ============ */
+/* 活動卡片資料
+   狀態邏輯（依後台設定時間自動判斷）：
+   1. 目前時間 ＜ 設定開始時間 → "not_started"（尚未開始，卡片顯示，按鈕：尚未開放）
+   2. 設定期間內 → "open"（開放登記中）
+      - 若該公司該活動剩餘數量 = 0 → 顯示「已額滿」，按鈕：已額滿
+      - 否則 → 顯示剩餘數量，按鈕：查看詳情
+   3. 目前時間 ＞ 設定結束時間 → 卡片隱藏，不列入陣列 */
+const ACTIVITIES = [
+  {tag:"棒球賽事",tagColor:"var(--blue-tag)",title:"2026 中秋大巨蛋球賽領票",dateFrom:"2026-09-01 09:00:00",dateTo:"2026-09-15 18:00:00",venue:"台北大巨蛋",state:"open",remain:12},
+  {tag:"棒球賽事",tagColor:"var(--blue-tag)",title:"2026 職棒總冠軍賽 主場加油團",dateFrom:"2026-09-05 09:00:00",dateTo:"2026-09-20 18:00:00",venue:"台中洲際棒球場",state:"open",remain:28},
+  {tag:"電影包場",tagColor:"var(--purple-tag)",title:"秋季員工電影包場之夜",dateFrom:"2026-09-10 09:00:00",dateTo:"2026-09-12 18:00:00",venue:"信義威秀影城",state:"open",remain:0},
+  {tag:"節慶福利",tagColor:"var(--amber-tag)",title:"中秋節禮盒暨烤肉活動申領",dateFrom:"2026-10-01 09:00:00",dateTo:"2026-10-05 18:00:00",venue:"各公司交誼廳",state:"not_started",remain:50},
+  {tag:"餐券",tagColor:"var(--green)",title:"集團合作餐廳員工優惠餐券",dateFrom:"2026-09-01 09:00:00",dateTo:"2026-09-30 18:00:00",venue:"線上兌換",state:"open",remain:99},
+  {tag:"電影包場",tagColor:"var(--purple-tag)",title:"動畫親子電影場次申領",dateFrom:"2026-09-08 09:00:00",dateTo:"2026-09-14 18:00:00",venue:"板橋大遠百威秀",state:"open",remain:40},
+];
+const IMG_PLACEHOLDER_ICON = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="14" rx="2"/><circle cx="15" cy="9" r="1.3"/><path d="M3 15.5l4.5-4.5 3 3 3.5-3.5 5.5 5.5"/></svg>`;
+function renderActivities(){
+  const grid = document.getElementById('act-card-grid');
+  // 本版活動列表使用既有 act01～act04 靜態卡片，沒有 act-card-grid；
+  // 找不到動態容器時直接略過，避免 JavaScript 錯誤中斷後續票券初始化。
+  if(!grid) return;
+  grid.innerHTML = ACTIVITIES.map(a=>{
+    const isFull = a.state === 'open' && a.remain <= 0;
+    let statusLabel, statusColor, btnLabel, btnClass, remainHtml;
+    if(a.state === 'not_started'){
+      statusLabel = '尚未開始'; statusColor = 'var(--amber-tag)';
+      btnLabel = '尚未開放'; btnClass = 'btn-outline';
+      remainHtml = `剩餘 <b>${a.remain}</b> 張`;
+    } else if(isFull){
+      statusLabel = '已額滿'; statusColor = 'var(--grey-light)';
+      btnLabel = '已額滿'; btnClass = 'btn-disabled';
+      remainHtml = `<span class="full">配額已無剩餘數量</span>`;
+    } else {
+      statusLabel = '開放登記中'; statusColor = 'var(--green)';
+      btnLabel = '查看詳情'; btnClass = 'btn-primary';
+      remainHtml = `剩餘 <b>${a.remain}</b> 張`;
+    }
+    const btnAttr = btnClass === 'btn-disabled' ? 'disabled' : '';
+    const dateText = `${a.dateFrom} 到 ${a.dateTo}`;
+    const cardState = a.state === 'not_started' ? 'not_started' : (isFull ? 'full' : 'open');
+    return `<div class="act-card" onclick="viewActivityContent('${cardState}')">
+      <div class="act-banner">
+        ${IMG_PLACEHOLDER_ICON}
+        <div class="tag-row">
+          <span class="tag status" style="background:${statusColor};">${statusLabel}</span>
+        </div>
+      </div>
+      <div class="body">
+        <div class="act-title">${a.title}</div>
+        <div class="act-meta"></div>
+        <div class="act-foot">
+          <div class="act-remain">${remainHtml}</div>
+          <button class="btn ${btnClass}" ${btnAttr} onclick="event.stopPropagation();viewActivityContent('${cardState}')">${btnLabel}</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+renderActivities();
+
+/* ============ 2. 活動內容頁 ============ */
+const ACTIVITY_NAME = "2026 中秋大巨蛋球賽領票";
+/* 票券設定（後台）：freeQty＝單一帳號免費（優惠）張數、quotaBase＝單一帳號免費＋付費總配額、stock＝剩餘庫存 */
+const TICKETS = [
+  { id:'staff',  name:'員工票－內野',   price:230, stock:12, freeQty:1, quotaBase:2, qty:0 },
+  { id:'family', name:'眷屬票－外野',   price:150, stock:0,  freeQty:0, quotaBase:0, qty:0 },
+  { id:'vip',    name:'貴賓票－VIP席', price:500, stock:8,  freeQty:0, quotaBase:2, qty:0 },
+];
+let CART = []; // 前往結帳時由已選票券組成：[{activityName, productName, unitPrice, qty, subtotal}]
+function cartTotalAmt(){ return CART.reduce((s,i)=>s+i.subtotal, 0); }
+
+function ticketCalc(t){
+  // 優惠票優先扣抵並以 0 元計價，其餘才以原價計算
+  const promoUsed = Math.min(t.qty, t.freeQty);
+  const paidQty = t.qty - promoUsed;
+  return {
+    subtotal: paidQty * t.price,
+    remainPromo: Math.max(0, t.freeQty - promoUsed),
+    remainQuota: Math.max(0, t.quotaBase - t.qty),
+  };
+}
+function renderTickets(){
+  let total = 0;
+  document.getElementById('ticket-list').innerHTML = TICKETS.map(t=>{
+    const c = ticketCalc(t);
+    total += c.subtotal;
+    const soldOut = t.stock <= 0 || t.quotaBase <= 0;
+    const priceText = (!soldOut && c.remainPromo > 0) ? '優惠後 NT$ 0 / 張' : `NT$ ${t.price} / 張`;
+    const badge = `<span class="promo-badge ${c.remainPromo<=0?'zero':''}">優惠剩餘 ${c.remainPromo} 張</span>`;
+    if(soldOut){
+      return `<div class="tk-card disabled">
+        <div class="tk-top"><div class="tk-name">${t.name}</div>${badge}</div>
+        <div class="tk-mid"><span class="tk-amt">${priceText}</span><span class="soldout-tag">配額已無剩餘數量</span></div>
+      </div>`;
+    }
+    return `<div class="tk-card ${t.qty>0?'has-qty':''}">
+      <div class="tk-top"><div class="tk-name">${t.name}</div>${badge}</div>
+      <div class="tk-mid"><span class="tk-amt">${priceText}</span><span class="tk-stock">剩餘 ${t.stock} 張</span></div>
+      <div class="tk-bottom">
+        <div class="qty-stepper">
+          <button onclick="changeTicketQty('${t.id}',-1)">－</button>
+          <div class="num">${t.qty}</div>
+          <button onclick="changeTicketQty('${t.id}',1)">＋</button>
+        </div>
+        <div class="tk-quota ${c.remainQuota<=0?'zero':''}">此商品此帳號剩餘配額 <b>${c.remainQuota}</b> 張</div>
+      </div>
+    </div>`;
+  }).join('');
+  document.getElementById('total-amt').textContent = 'NT$ ' + total;
+}
+function guardContentState(){
+  if(CONTENT_STATE === 'not_started'){ showToast('尚未開始開放登記'); return true; }
+  if(CONTENT_STATE === 'full'){ showToast('本活動配額已無剩餘數量'); return true; }
+  return false;
+}
+function changeTicketQty(id, d){
+  if(guardContentState()) return;
+  const t = TICKETS.find(x=>x.id===id);
+  const next = t.qty + d;
+  if(next < 0) return;                                  // 數量不能低於 0
+  if(next > Math.min(t.quotaBase, t.stock)){ showToast('已達該商品個人配額上限。'); return; }
+  t.qty = next;
+  renderTickets();
+}
+function goCheckout(){
+  if(guardContentState()) return;
+  const picked = TICKETS.filter(t=>t.qty>0);
+  if(picked.length === 0){ showToast('請先選擇購買數量。'); return; }
+  CART = picked.map(t=>({ activityName:ACTIVITY_NAME, productName:t.name, unitPrice:t.price, qty:t.qty, subtotal:ticketCalc(t).subtotal }));
+  go('checkout');
+}
+function resetTickets(){ TICKETS.forEach(t=>t.qty=0); renderTickets(); }
+
+let CONTENT_STATE = 'open';
+function viewActivityContent(state){
+  CONTENT_STATE = state;
+  go('content');
+  if(typeof renderTickets === 'function') renderTickets();
+  applyContentState();
+}
+function applyContentState(){
+  const tag = document.getElementById('act-status-tag');
+  const banner = document.getElementById('ac-notice-banner');
+  if(CONTENT_STATE === 'not_started'){
+    tag.textContent = '尚未開始';
+    tag.style.background = 'var(--amber-tag)';
+    banner.style.display = 'block';
+    banner.textContent = '本活動尚未開放登記，請於開放時間後再回來選購';
+  } else if(CONTENT_STATE === 'full'){
+    tag.textContent = '已額滿';
+    tag.style.background = 'var(--grey-light)';
+    banner.style.display = 'block';
+    banner.textContent = '本活動配額已無剩餘數量';
+  } else {
+    tag.textContent = '開放登記中';
+    tag.style.background = 'var(--green)';
+    banner.style.display = 'none';
+  }
+}
+renderTickets();
+
+/* ============ 3. 訂單資訊頁 ============ */
+function renderCheckout(){
+  if(CART.length === 0){
+    // 直接從導覽列進入時的示範資料（避免空白頁）
+    CART.push({activityName:ACTIVITY_NAME, productName:TICKETS[0].name, unitPrice:TICKETS[0].price, qty:1, subtotal:0});
+  }
+  document.getElementById('oi-email').textContent = 'name@soft-world.com.tw';
+  loadCheckoutInfo();
+
+  const rowsEl = document.getElementById('prod-rows');
+  rowsEl.innerHTML = CART.map(item=>`
+    <div class="prod-row">
+      <div style="flex:1;"><div class="name">${item.activityName}</div><div class="sub">${item.productName}</div></div>
+      <div class="unit">NT$${item.unitPrice}</div><div class="qty">${item.qty}</div><div class="sub-amt">NT$${item.subtotal}</div>
+    </div>`).join('');
+
+  const goodsTotal = cartTotalAmt();
+  const payable = goodsTotal;
+
+  document.getElementById('oi-sum-goods').textContent = 'NT$' + goodsTotal;
+  document.getElementById('oi-sum-payable').textContent = 'NT$' + payable;
+  document.getElementById('confirm-pay-btn').textContent = `確認付款 NT$ ${payable}`;
+}
+
+let invoiceTab = 'cloud';
+function setInvoiceTab(tab){
+  invoiceTab = tab;
+  document.querySelectorAll('.invoice-tab').forEach(t=>t.classList.toggle('active', t.dataset.tab===tab));
+  document.getElementById('invoice-extra').style.display = tab==='donate' ? 'block' : 'none';
+  document.getElementById('invoice-cloud').style.display = tab==='cloud' ? 'block' : 'none';
+  document.getElementById('invoice-corp').style.display = tab==='corp' ? 'block' : 'none';
+  if(tab==='cloud') syncInvoiceFromBuyer();
+}
+const CITY_DISTRICTS = {
+  '台北市':['中正區','大安區','信義區','松山區','內湖區','士林區'],
+  '新北市':['板橋區','中和區','永和區','新店區','三重區','新莊區'],
+  '桃園市':['桃園區','中壢區','平鎮區','龜山區'],
+  '台中市':['西屯區','北屯區','南屯區','西區'],
+  '台南市':['東區','中西區','永康區','安平區'],
+  '高雄市':['前鎮區','苓雅區','左營區','鼓山區'],
+};
+(function initCities(){
+  ['inv','corp'].forEach(p=>{
+    document.getElementById(p+'-city').innerHTML = '<option value="">請選擇</option>' + Object.keys(CITY_DISTRICTS).map(c=>`<option>${c}</option>`).join('');
+  });
+})();
+function onCityChange(p){
+  p = p || 'inv';
+  const city = document.getElementById(p+'-city').value;
+  document.getElementById(p+'-district').innerHTML = '<option value="">請選擇</option>' + (CITY_DISTRICTS[city]||[]).map(n=>`<option>${n}</option>`).join('');
+  validateInvField(p+'-city');
+}
+function setCarrier(){
+  const v = document.getElementById('inv-carrier').value;
+  ['none','barcode','cert'].forEach(k=>{ document.getElementById('inv-carrier-'+k).style.display = (k===v)?'block':'none'; });
+  if(v==='none') syncInvoiceFromBuyer();
+}
+// 姓名／電話預設帶入訂購人資訊（使用者未手動修改前持續同步）
+function syncInvoiceFromBuyer(){
+  [['inv-name','buyer-name'],['inv-phone','buyer-phone']].forEach(([iid,bid])=>{
+    const i = document.getElementById(iid), b = document.getElementById(bid);
+    if(i && b && !i.dataset.touched) i.value = b.value;
+  });
+}
+// 統一編號檢查碼：權重 1,2,1,2,1,2,4,1，各位乘積的十位數＋個位數相加，總和能被 5 整除（第 7 碼為 7 時，總和＋1 能被 5 整除亦可）
+function isValidTaxId(v){
+  v = v.trim();
+  if(!/^\d{8}$/.test(v)) return false;
+  const w = [1,2,1,2,1,2,4,1];
+  const sum = w.reduce((s,wt,i)=>{ const p = wt*(+v[i]); return s + Math.floor(p/10) + (p%10); }, 0);
+  return sum % 5 === 0 || (v[6]==='7' && (sum+1) % 5 === 0);
+}
+const INV_RULES = {
+  'inv-name':     { test:v=>v.trim().length>=2 && v.trim().length<=20, msg:'請輸入姓名（2～20 字）' },
+  'inv-phone':    { test:v=>{const s=v.replace(/[\s-]/g,''); return /^09\d{8}$/.test(s) || /^0[2-8]\d{7,8}$/.test(s);}, msg:'請輸入正確的台灣連絡電話，例：0912345678' },
+  'inv-city':     { test:v=>!!v, msg:'請選擇縣市' },
+  'inv-district': { test:v=>!!v, msg:'請選擇鄉鎮市區' },
+  'inv-street':   { test:v=>v.trim().length>=2, msg:'請完整填寫街道路名' },
+  'inv-barcode':  { test:v=>/^\/[0-9A-Z.+-]{7}$/.test(v.trim().toUpperCase()), msg:'手機條碼格式不正確：以「/」開頭，共 8 碼（大寫英數字及 . + -）' },
+  'corp-email':   { test:v=>/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()), msg:'電子郵件格式不正確' },
+  'corp-title':   { test:v=>v.trim().length>=2 && v.trim().length<=60, msg:'請輸入公司抬頭（2～60 字）' },
+  'corp-taxid':   { test:isValidTaxId, msg:'格式有誤：統一編號需為 8 碼數字，且須通過檢查碼' },
+  'corp-city':    { test:v=>!!v, msg:'請選擇縣市' },
+  'corp-district':{ test:v=>!!v, msg:'請選擇鄉鎮市區' },
+  'corp-street':  { test:v=>v.trim().length>=2, msg:'請完整填寫街道路名' },
+  'inv-cert':     { test:v=>/^[A-Z]{2}\d{14}$/.test(v.trim().toUpperCase()), msg:'自然人憑證格式不正確：2 碼大寫英文＋14 碼數字' },
+};
+function validateInvField(id, showEmpty){
+  const r = INV_RULES[id], el = document.getElementById(id), err = document.getElementById(id+'-err');
+  const v = el.value;
+  let msg = '';
+  if(!v.trim()){ if(showEmpty) msg = '此欄位為必填'; }
+  else if(!r.test(v)) msg = r.msg;
+  err.textContent = msg; err.style.display = msg ? 'block' : 'none';
+  el.classList.toggle('invalid', !!msg);
+  return !msg && !!v.trim();
+}
+function validateInvoice(allowScroll){
+  let ids;
+  if(invoiceTab === 'cloud'){
+    const carrier = document.getElementById('inv-carrier').value;
+    ids = carrier==='none' ? ['inv-name','inv-phone','inv-city','inv-district','inv-street']
+        : carrier==='barcode' ? ['inv-barcode'] : ['inv-cert'];
+  } else if(invoiceTab === 'corp'){
+    ids = ['corp-email','corp-title','corp-taxid','corp-city','corp-district','corp-street'];
+  } else return true;
+  let firstBad = null;
+  ids.forEach(id=>{ if(!validateInvField(id, true) && !firstBad) firstBad = document.getElementById(id); });
+  if(firstBad && allowScroll){ firstBad.scrollIntoView({behavior:'smooth', block:'center'}); }
+  return !firstBad;
+}
+const BUYER_RULES = {
+  name:  { id:'buyer-name',  test:v=>v.trim().length>=2 && v.trim().length<=20, msg:'請輸入姓名（2～20 字）' },
+  empid: { id:'buyer-empid', test:v=>/^[A-Za-z0-9]{3,12}$/.test(v.trim()),       msg:'員工編號格式不正確，僅可輸入英數字（3～12 碼）' },
+  phone: { id:'buyer-phone', test:v=>/^09\d{8}$/.test(v.replace(/[\s-]/g,'')),   msg:'請輸入正確的手機號碼，例：0912345678' },
+};
+function validateBuyerField(key, showEmpty){
+  const r = BUYER_RULES[key];
+  const input = document.getElementById(r.id), err = document.getElementById(r.id+'-err');
+  const v = input.value;
+  let msg = '';
+  if(!v.trim()){ if(showEmpty) msg = '此欄位為必填'; }
+  else if(!r.test(v)) msg = r.msg;
+  err.textContent = msg; err.style.display = msg ? 'block' : 'none';
+  input.classList.toggle('invalid', !!msg);
+  syncInvoiceFromBuyer();
+  return !msg && !!v.trim();
+}
+function validateBuyer(){
+  let firstBad = null;
+  Object.keys(BUYER_RULES).forEach(k=>{
+    if(!validateBuyerField(k, true) && !firstBad) firstBad = document.getElementById(BUYER_RULES[k].id);
+  });
+  if(firstBad){ firstBad.scrollIntoView({behavior:'smooth', block:'center'}); firstBad.focus(); }
+  return !firstBad;
+}
+
+/* ===== 記住結帳資訊（localStorage，僅存於此瀏覽器） ===== */
+const SAVE_KEY = 'checkoutInfo_v1';
+const SAVE_TEXT_IDS = ['buyer-name','buyer-empid','buyer-phone','inv-name','inv-phone','inv-street','inv-barcode','inv-cert','corp-email','corp-title','corp-taxid','corp-street'];
+function persistCheckoutInfo(){
+  try{
+    if(!document.getElementById('remember-checkout').checked){ localStorage.removeItem(SAVE_KEY); return; }
+    const data = { tab: invoiceTab, carrier: document.getElementById('inv-carrier').value, donate: document.getElementById('inv-donate').value,
+      invCity: document.getElementById('inv-city').value, invDistrict: document.getElementById('inv-district').value,
+      corpCity: document.getElementById('corp-city').value, corpDistrict: document.getElementById('corp-district').value, text:{} };
+    SAVE_TEXT_IDS.forEach(id=>{ data.text[id] = document.getElementById(id).value; });
+    localStorage.setItem(SAVE_KEY, JSON.stringify(data));
+  }catch(e){ /* 儲存失敗時略過，不影響付款流程 */ }
+}
+let checkoutInfoLoaded = false;
+function loadCheckoutInfo(){
+  if(checkoutInfoLoaded) return;
+  checkoutInfoLoaded = true;
+  let data = null;
+  try{ data = JSON.parse(localStorage.getItem(SAVE_KEY) || 'null'); }catch(e){ data = null; }
+  if(!data) return;
+  document.getElementById('remember-checkout').checked = true;
+  SAVE_TEXT_IDS.forEach(id=>{
+    const el = document.getElementById(id);
+    if(!el.value && data.text && data.text[id]){ el.value = data.text[id]; if(id==='inv-name'||id==='inv-phone') el.dataset.touched = 1; }
+  });
+  document.getElementById('inv-donate').value = data.donate || document.getElementById('inv-donate').value;
+  document.getElementById('inv-carrier').value = data.carrier || 'none';
+  [['inv', data.invCity, data.invDistrict], ['corp', data.corpCity, data.corpDistrict]].forEach(([p, city, dist])=>{
+    const c = document.getElementById(p+'-city');
+    if(city && !c.value){ c.value = city; onCityChange(p); document.getElementById(p+'-district').value = dist || ''; }
+  });
+  setInvoiceTab(data.tab || 'cloud');
+  setCarrier();
+}
+function confirmOrder(){
+  const okBuyer = validateBuyer();
+  const okInv = validateInvoice(okBuyer);
+  if(!okBuyer || !okInv){ showToast(okBuyer ? '請完成發票資訊後再付款' : '請完成訂購人資訊後再付款'); return; }
+  persistCheckoutInfo();
+  showToast('開啟 MyCard Billing 付款中…');
+  setTimeout(()=>{
+    // 付款成功後，清空購物車並跳轉至我的訂單 → 已完成
+    CART = [];
+    resetTickets();
+    go('orderdetail');
+    setOrderState('completed');
+    showToast('付款成功，訂單已完成。');
+  }, 900);
+}
+
+/* ============ 3b. 我的訂單（列表） ============ */
+const MY_ORDERS = [
+  { name:"2026 中秋大巨蛋球賽領票", sub:"內野票", orderDate:"2026-09-08", qty:2, amt:230, status:"paid", detailState:"completed" },
+  { name:"秋季員工電影包場之夜", sub:"前排", orderDate:"2026-09-06", qty:1, amt:130, status:"pending", deadline:"2026-09-10 23:59（逾期自動取消）", detailState:"pending" },
+  { name:"集團合作餐廳員工優惠餐券", sub:"VIP晚餐", orderDate:"2026-08-28", qty:1, amt:0, status:"cancelled", detailState:"cancelled" },
+  { name:"動畫親子電影場次申領", sub:"晚場", orderDate:"2026-08-20", qty:1, amt:450, status:"paid", detailState:"completed" },
+];
+const OL_TABS = [
+  { key:"all", label:"全部訂單" },
+  { key:"pending", label:"待付款" },
+  { key:"paid", label:"已完成" },
+  { key:"cancelled", label:"已取消" },
+];
+let olActiveTab = "all";
+const OL_STATUS_LABEL = { paid:"付款完成", pending:"待付款", cancelled:"已取消" };
+function renderOrderList(){
+  document.getElementById('ol-tabs').innerHTML = OL_TABS.map(t=>
+    `<div class="ol-tab ${t.key===olActiveTab?'active':''}" onclick="setOlTab('${t.key}')">${t.label}</div>`
+  ).join('');
+  const list = olActiveTab==='all' ? MY_ORDERS : MY_ORDERS.filter(o=>o.status===olActiveTab);
+  document.getElementById('ol-list').innerHTML = list.map(o=>`
+    <div class="ol-card">
+      <div class="top">
+        <div><div class="title">${o.name}</div><div class="sub">${o.sub}　｜　訂購日期 ${o.orderDate}</div></div>
+        <div style="text-align:right;">
+          <div class="ol-status ${o.status}">${OL_STATUS_LABEL[o.status]}</div>
+          ${o.deadline ? `<div class="ol-deadline">付款期限：${o.deadline}</div>` : ''}
+        </div>
+      </div>
+      <div class="ol-bottom">
+        <div class="ol-qty">總數量 ${o.qty}</div>
+        <div class="ol-right">
+          <div class="ol-amt">總金額：<b>NT$ ${o.amt}</b></div>
+          <button class="ol-detail-btn" onclick="viewOrderDetail('${o.detailState}')">查看訂單詳情 →</button>
+        </div>
+      </div>
+    </div>`).join('');
+}
+function setOlTab(key){ olActiveTab = key; renderOrderList(); }
+function viewOrderDetail(state){ go('orderdetail'); setOrderState(state); }
+
+/* ============ 4. 訂單詳情頁（4 狀態切換） ============ */
+const ORDER_STATES = {
+  ticket:{label:"已取得領票資格",icon:"✓",color:"var(--green)",bg:"var(--green-light)",totalLabel:"實付金額",totalAmt:"NT$230",pay:[["付款方式","銀行轉帳"],["交易序號／轉帳帳號末五碼","TXN-20260908-00231 ／ 88421"]],note:null,btns:[["返回訂單列表",false]]},
+  completed:{label:"已完成",icon:"✓",color:"var(--green)",bg:"var(--green-light)",totalLabel:"實付金額",totalAmt:"NT$230",pay:[["付款方式","銀行轉帳"],["交易序號／轉帳帳號末五碼","TXN-20260908-00231 ／ 88421"]],note:null,btns:[["返回訂單列表",false]]},
+  pending:{label:"待付款",icon:"<svg viewBox='0 0 24 24' width='20' height='20' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><circle cx='12' cy='13' r='8'/><path d='M12 9v4l3 2M9 2h6'/></svg>",color:"var(--orange)",bg:"var(--orange-light)",totalLabel:"應付金額",totalAmt:"NT$230",pay:[["付款方式","銀行轉帳"],["銀行代碼","007"],["轉匯帳號","1238826091700522"],["繳費期限","2026-09-17 23:59:59"]],note:{text:"請於 2026-09-17 23:59:59 前完成付款，逾期訂單將自動取消",style:"solid-orange"},btns:[["返回訂單列表",false],["取消訂單",false]]},
+  cancelled:{label:"已取消",icon:"✕",color:"var(--grey)",bg:"var(--bg-alt)",totalLabel:"應付金額（未付款）",totalAmt:"NT$230",pay:[["付款方式","－"],["取消時間／原因","2026-09-16 00:00　逾期未完成付款"]],note:null,btns:[["返回訂單列表",false]]},
+};
+let currentState = 'ticket';
+function setOrderState(k){
+  currentState = k;
+  const s = ORDER_STATES[k];
+  const statusEl = document.getElementById('od-status');
+  statusEl.style.background = s.bg; statusEl.style.borderColor = s.color;
+  document.getElementById('od-icon').style.background = s.color;
+  document.getElementById('od-icon').innerHTML = s.icon;
+  document.getElementById('od-label').textContent = s.label;
+  document.getElementById('od-total-label').textContent = s.totalLabel;
+  document.getElementById('od-total-amt').textContent = s.totalAmt;
+  document.getElementById('od-total-amt').style.color = s.color;
+  document.getElementById('od-pay-rows').innerHTML = s.pay.map(([l,v])=>`<div class="od-feerow"><span>${l}</span><b>${v}</b></div>`).join('');
+  const noteEl = document.getElementById('od-note');
+  if(s.note){
+    noteEl.style.display='block'; noteEl.textContent = s.note.text;
+    if(s.note.style==='solid-orange'){noteEl.style.background='var(--orange-light)';noteEl.style.border='1px solid var(--orange)';noteEl.style.color='var(--orange)';}
+    else{noteEl.style.background='none';noteEl.style.border='1px dashed var(--border)';noteEl.style.color='var(--grey-light)';}
+  } else { noteEl.style.display='none'; }
+  document.getElementById('od-btns').innerHTML = s.btns.map(([l,primary])=>{
+    const action = l==='返回訂單列表' ? 'back' : (l==='取消訂單' ? 'cancel' : '');
+    return `<button class="btn btn-outline" style="flex:1;padding:12px;" data-action="${action}">${l}</button>`;
+  }).join('');
+  document.querySelectorAll('#od-btns [data-action="back"]').forEach(b=>b.addEventListener('click',()=>go('orderlist')));
+  document.querySelectorAll('#od-btns [data-action="cancel"]').forEach(b=>b.addEventListener('click',()=>openModal('modal-cancel-order')));
+}
+function confirmCancelOrder(){
+  closeModal('modal-cancel-order');
+  setOrderState('cancelled');
+  showToast('訂單已取消。');
+}
+setOrderState('ticket');
+
+
+</script>
+</body>
+</html>

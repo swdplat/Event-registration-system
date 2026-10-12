@@ -17,7 +17,7 @@
 <body>
 <header class="fe-header">
     <div class="left">
-      <a href="#" data-page="list" class="fe-logo"><span class="mark"><img src="img/soft-world.webp"></span>智冠集團員工活動系統</a>
+      <span class="fe-logo"><span class="mark"><img src="img/soft-world.webp"></span>智冠集團員工活動系統</span>
     </div>
 </header>
 
@@ -67,7 +67,7 @@
 <section class="page" id="page-list">
   <header class="fe-header">
     <div class="left">
-      <a href="#" data-page="list" class="fe-logo"><span class="mark"><img src="img/soft-world.webp"></span>智冠集團員工活動系統</a>
+      <a href="#" class="fe-logo" onclick="event.preventDefault(); go('list');"><span class="mark"><img src="img/soft-world.webp"></span>智冠集團員工活動系統</a>
     </div>
     <div class="right">王小明 (soft-world.com.tw)<span class="sep">|</span><a href="#" data-page="orderlist">我的訂單</a><span class="sep">|</span><a href="#" data-page="login">登出</a></div>
   </header>
@@ -134,7 +134,7 @@
 <section class="page" id="page-content">
   <header class="fe-header">
     <div class="left">
-      <a href="#" data-page="list" class="fe-logo"><span class="mark"><img src="img/soft-world.webp"></span>智冠集團員工活動系統</a>
+      <a href="#" class="fe-logo" onclick="event.preventDefault(); go('list');"><span class="mark"><img src="img/soft-world.webp"></span>智冠集團員工活動系統</a>
 
     </div>
     <div class="right">王小明 (soft-world.com.tw)<span class="sep">|</span><a href="#" data-page="orderlist">我的訂單</a><span class="sep">|</span><a href="#" data-page="login">登出</a></div>
@@ -185,7 +185,7 @@
 <section class="page" id="page-checkout">
   <header class="fe-header">
     <div class="left">
-      <a href="#" data-page="list" class="fe-logo"><span class="mark"><img src="img/soft-world.webp"></span>智冠集團員工活動系統</a>
+      <a href="#" class="fe-logo" onclick="event.preventDefault(); go('list');"><span class="mark"><img src="img/soft-world.webp"></span>智冠集團員工活動系統</a>
     </div>
     <div class="right">王小明 (soft-world.com.tw)<span class="sep">|</span><a href="#" data-page="orderlist">我的訂單</a><span class="sep">|</span><a href="#" data-page="login">登出</a></div>
   </header>
@@ -349,7 +349,7 @@
 <section class="page" id="page-orderlist">
   <header class="fe-header">
     <div class="left">
-      <a href="#" data-page="list" class="fe-logo"><span class="mark"><img src="img/soft-world.webp"></span>智冠集團員工活動系統</a>
+      <a href="#" class="fe-logo" onclick="event.preventDefault(); go('list');"><span class="mark"><img src="img/soft-world.webp"></span>智冠集團員工活動系統</a>
     </div>
     <div class="right">王小明 (soft-world.com.tw)<span class="sep">|</span><a href="#" data-page="orderlist">我的訂單</a><span class="sep">|</span><a href="#" data-page="login">登出</a></div>
   </header>
@@ -368,7 +368,7 @@
 <section class="page" id="page-orderdetail">
   <header class="fe-header">
     <div class="left">
-      <a href="#" data-page="list" class="fe-logo"><span class="mark"><img src="img/soft-world.webp"></span>智冠集團員工活動系統</a>
+      <a href="#" class="fe-logo" onclick="event.preventDefault(); go('list');"><span class="mark"><img src="img/soft-world.webp"></span>智冠集團員工活動系統</a>
     </div>
     <div class="right">王小明 (soft-world.com.tw)<span class="sep">|</span><a href="#" data-page="orderlist">我的訂單</a><span class="sep">|</span><a href="#" data-page="login">登出</a></div>
   </header>
@@ -991,8 +991,8 @@ function validateInvoice(allowScroll){
   return !firstBad;
 }
 const BUYER_RULES = {
-  name:  { id:'buyer-name',  test:v=>v.trim().length>=2 && v.trim().length<=20, msg:'請輸入姓名（2～20 字）' },
-  empid: { id:'buyer-empid', test:v=>/^[A-Za-z0-9]{3,12}$/.test(v.trim()),       msg:'員工編號格式不正確，僅可輸入英數字（3～12 碼）' },
+  name:  { id:'buyer-name',  test:v=>/^[\u3400-\u4DBF\u4E00-\u9FFF\uF900-\uFAFFa-zA-Z]{2,20}$/.test(v.trim()), msg:'格式錯誤' },
+  empid: { id:'buyer-empid', test:v=>/^[A-Za-z0-9]{3,12}$/.test(v.trim()),       msg:'格式錯誤(例：SW01234)' },
   phone: { id:'buyer-phone', test:v=>/^09\d{8}$/.test(v.replace(/[\s-]/g,'')),   msg:'請輸入正確的手機號碼，例：0912345678' },
 };
 function validateBuyerField(key, showEmpty){

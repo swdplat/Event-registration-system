@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>智冠集團員工活動登記系統</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+	
+<link rel="stylesheet" href="css/L.css">
+<link rel="stylesheet" href="css/LM.css" media="only screen and (min-width:1280px) and (max-width:1680px)">
+<!-- jquery引入檔 -->
+<script src="js/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+
+<!-- ============================================================ -->
+<!-- 7. 後台／網域白名單控管 -->
+<!-- ============================================================ -->
+<section class="page active" id="page-admin-domain">
+  <div class="admin-shell">    <main class="admin-main">
+
+      <div class="admin-body">
+        <div class="admin-card">
+          <div class="ttl">網域白名單控管</div>
+          <div class="sub">透過此功能可以新增／移除員工活動登記系統之白名單網域，僅白名單內網域的員工信箱可完成登入驗證</div>
+
+          <div style="display:flex;justify-content:space-between;align-items:center;margin:6px 0 10px;">
+            <label style="font-size:13px;font-weight:700;margin:0;">目前白名單網域</label>
+            <button class="btn btn-primary" style="background:var(--red);" onclick="openAddDomain()">＋ 新增網域</button>
+          </div>
+          <table class="dom-table">
+            <thead><tr><th>網域</th><th>公司名稱</th><th>加入時間</th><th>新增操作人</th><th>操作</th></tr></thead>
+            <tbody id="domain-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+  <div id="copyright">© Soft-World International Corporation. All Rights Reserved.</div>
+</section>
+
+<!-- ===== Modals ===== -->
+<div class="modal-overlay" id="modal-add-domain">
+  <div class="modal-box" style="text-align:left;">
+    <h3>新增白名單網域</h3>
+    <div class="sub" style="margin-bottom:16px;">僅白名單內網域的員工信箱可完成登入驗證</div>
+    <div class="form-field">
+      <label>網域 <span class="req">＊</span></label>
+      <input class="form-input" id="dm-domain" placeholder="例：@newcompany.com.tw" oninput="validateDomainInput()" />
+      <div class="field-err" id="dm-domain-err"></div>
+    </div>
+    <div class="form-field">
+      <label>公司名稱 <span class="req">＊</span></label>
+      <input class="form-input" id="dm-company" placeholder="例：智冠科技" oninput="validateCompanyInput()" />
+      <div class="field-err" id="dm-company-err"></div>
+    </div>
+    <div style="font-size:10.5px;color:var(--grey-light);margin-bottom:6px;">＊ 需為合法網域格式，重複網域將無法新增</div>
+    <div class="modal-btns">
+      <button class="btn" style="background:#fff;border:1px solid var(--border);color:var(--grey);" onclick="closeModal('modal-add-domain')">取消</button>
+      <button class="btn btn-primary" style="background:var(--red);" onclick="confirmAddDomain()">確認新增</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-cancel-order">
+  <div class="modal-box">
+    <div class="modal-icon">！</div>
+    <h3>確定要取消此訂單嗎？</h3>
+    <div class="sub">訂單編號　ORD-20260908-0012</div>
+    <p>取消後，此訂單將無法復原，若已完成部分付款將依公司退款規範處理。確定要取消嗎？</p>
+    <div class="modal-btns">
+      <button class="btn" style="background:#fff;border:1px solid var(--border);color:var(--grey);" onclick="closeModal('modal-cancel-order')">再想想</button>
+      <button class="btn btn-primary" onclick="confirmCancelOrder()">確認取消訂單</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-unpublish">
+  <div class="modal-box">
+    <div class="modal-icon">！</div>
+    <h3>確定要下架此活動嗎？</h3>
+    <div class="sub" id="modal-unpublish-name"></div>
+    <p>下架後，前台將立即隱藏本活動，員工將無法繼續報名或領票。此動作可隨時重新上架恢復。</p>
+    <div class="modal-btns">
+      <button class="btn" style="background:#fff;border:1px solid var(--border);color:var(--grey);" onclick="closeModal('modal-unpublish')">取消</button>
+      <button class="btn btn-primary">確認下架</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-add-product">
+  <div class="modal-box" style="max-width:640px;max-height:86vh;overflow-y:auto;text-align:left;">
+    <h3 id="ap-modal-title">新增商品</h3>
+    <div class="sub" id="ap-modal-sub" style="margin-bottom:16px;">設定商品基本資訊，並依公司別設定對象與階層配額</div>
+
+    <div id="ap-fields">
+      <div class="form-field">
+        <label>商品名稱 <span class="req">＊</span></label>
+        <input class="form-input" id="ap-name" value="一般票" />
+      </div>
+      <div class="form-field">
+        <label>商品價格 <span class="req">＊</span></label>
+        <input class="form-input" id="ap-price" value="230" />
+      </div>
+
+      <div class="form-field">
+        <label>商品總數量額度 <span class="req">＊</span></label>
+        <input class="form-input" id="ap-total" value="300" inputmode="numeric" oninput="validateApTotal()" />
+        <div class="field-err" id="ap-total-err"></div>
+        <div style="font-size:10.5px;color:var(--grey-light);margin-top:6px;">此商品可發放的總張數；下方各公司「總數量限制」加總不可超過此額度</div>
+      </div>
+
+      <div class="form-field" style="margin-bottom:8px;">
+        <label style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">適用公司別 <span class="req">＊</span>
+          <span class="toggle" id="ap-all-toggle" onclick="toggleApAll()"><span class="knob"></span></span>
+          <span id="ap-all-label" style="font-size:11.5px;color:var(--grey-light);font-weight:400;">依公司別設定</span>
+        </label>
+        <div style="font-size:10.5px;color:var(--grey-light);">開啟後不分公司別：白名單內所有網域的員工都可以購買，共用商品總數量額度，先搶先得</div>
+      </div>
+
+      <div id="ap-company-section">
+        <div class="form-field">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+            <label style="font-weight:500;color:var(--grey);margin:0;">選擇公司（可複選，勾選後展開配額設定）</label>
+            <button type="button" class="select-all-btn" id="ap-select-all" onclick="toggleAllCompanies()">全選</button>
+          </div>
+          <div id="ap-company-checks"></div>
+          <div class="field-err" id="ap-company-err"></div>
+        </div>
+
+        <div class="form-field">
+          <label style="margin-bottom:4px;">公司配額列表</label>
+          <table class="quota-table">
+            <thead><tr><th>公司別</th><th>該公司總數量限制
+              <span class="help-wrap">
+                <button type="button" class="help-btn" aria-label="說明">?</button>
+                <span class="help-tip">填寫 0 表示該公司不限制額度，僅受「商品總數量額度」限制，先搶先得</span>
+              </span>
+            </th><th style="color:var(--green);">單一帳號免費票數量</th><th style="color:var(--orange);">單一帳號自費票數量</th></tr></thead>
+            <tbody id="quota-body"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div id="ap-all-section" style="display:none;">
+        <div class="form-field">
+          <label style="margin-bottom:8px;">單一帳號購買額度（所有符合白名單網域的帳號皆適用）</label>
+          <div class="form-row2">
+            <div>
+              <div style="font-size:10.5px;font-weight:700;color:var(--green);margin-bottom:6px;">單一帳號免費票數量</div>
+              <input class="form-input" id="ap-all-free" value="1" inputmode="numeric" oninput="validateApAll()" />
+            </div>
+            <div>
+              <div style="font-size:10.5px;font-weight:700;color:var(--orange);margin-bottom:6px;">單一帳號自費票數量</div>
+              <input class="form-input" id="ap-all-paid" value="1" inputmode="numeric" oninput="validateApAll()" />
+            </div>
+          </div>
+          <div class="field-err" id="ap-all-err"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-btns">
+      <button class="btn" style="background:#fff;border:1px solid var(--border);color:var(--grey);" onclick="closeModal('modal-add-product')" id="ap-cancel-btn">取消</button>
+      <button class="btn btn-primary" style="background:var(--navy);" onclick="confirmAddProduct()" id="ap-confirm-btn">確認新增商品</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-export">
+  <div class="modal-box">
+    <h3>匯出活動報表</h3>
+    <div class="sub" id="modal-export-name"></div>
+    <div class="form-field" style="margin-top:14px;">
+      <label>匯出公司範圍 <span class="req">＊</span></label>
+      <select class="form-input" id="export-company"></select>
+    </div>
+    <div class="modal-btns">
+      <button class="btn" style="background:#fff;border:1px solid var(--border);color:var(--grey);" onclick="closeModal('modal-export')">取消</button>
+      <button class="btn btn-primary" style="background:var(--navy);">確認匯出</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+<div id="dp-pop"></div>
+
+<script>
+
+// 公司別顯示白名單內維護的「公司名稱」，網域以小字輔助
+function renderApCompanyChecks(){
+  ensureQuotaEntries();
+  document.getElementById('ap-company-checks').innerHTML = DOMAINS.map(d=>{
+    const k = domKey(d);
+    return `<label class="cb-row"><input type="checkbox" ${COMPANY_QUOTA[k].checked?'checked':''} onchange="toggleCompany('${k}',this)"><span><b>${d.company}</b><span class="cb-domain">@${k}</span></span></label>`;
+  }).join('');
+  updateSelectAllBtn();
+}
+function allCompaniesChecked(){ return DOMAINS.length > 0 && DOMAINS.every(d=>COMPANY_QUOTA[domKey(d)].checked); }
+function updateSelectAllBtn(){
+  const btn = document.getElementById('ap-select-all');
+  if(btn) btn.textContent = allCompaniesChecked() ? '取消全選' : '全選';
+}
+function toggleAllCompanies(){
+  ensureQuotaEntries();
+  const target = !allCompaniesChecked();
+  DOMAINS.forEach(d=>{ COMPANY_QUOTA[domKey(d)].checked = target; });
+  setApMsg('ap-company-err', '');
+  renderApCompanyChecks();
+  renderQuotaTable();
+}
+function renderQuotaTable(){
+  ensureQuotaEntries();
+  const body = document.getElementById('quota-body');
+  body.innerHTML = DOMAINS.filter(d=>COMPANY_QUOTA[domKey(d)].checked).map(d=>{
+    const k = domKey(d), c = COMPANY_QUOTA[k];
+    return `<tr>
+      <td><div style="font-weight:700;font-size:12.5px;">${d.company}</div><div class="cb-domain" style="margin:2px 0 0;">@${k}</div></td>
+      <td style="white-space:nowrap;"><div style="display:flex;align-items:center;"><input value="${c.total}" oninput="updateQuota('${k}','total',this.value)"><span class="unl-tag" id="unl-${k}" style="${c.total===0?'':'display:none;'}">不限制</span></div></td>
+      <td><input value="${c.free}" oninput="updateQuota('${k}','free',this.value)"></td>
+      <td><input value="${c.paid}" oninput="updateQuota('${k}','paid',this.value)"></td>
+    </tr>`;
+  }).join('');
+}
+function toggleCompany(k, el){ COMPANY_QUOTA[k].checked = el.checked; setApMsg('ap-company-err', ''); updateSelectAllBtn(); renderQuotaTable(); }
+function updateQuota(k, field, val){
+  COMPANY_QUOTA[k][field] = parseInt(val)||0;
+  if(field==='total'){ const t = document.getElementById('unl-'+k); if(t) t.style.display = COMPANY_QUOTA[k].total===0 ? '' : 'none'; }
+}
+
+/* ============ 7. 網域白名單 ============ */
+let DOMAINS = [
+  {name:"@soft-world.com.tw",company:"智冠科技",addedAt:"2026-01-05 10:12",operator:"李小華（系統管理員）"},
+  {name:"@gamefirst.com.tw",company:"網龍",addedAt:"2026-01-05 10:12",operator:"李小華（系統管理員）"},
+  {name:"@mail.gameflier.com.tw",company:"遊戲新幹線",addedAt:"2026-03-18 14:30",operator:"陳雅婷（人資行政）"},
+];
+function renderDomains(){
+  const body = document.getElementById('domain-body');
+  body.innerHTML = DOMAINS.map((d,i)=>`<tr>
+    <td><span class="dom-check">✓</span><b>${d.name}</b></td>
+    <td id="co-cell-${i}">${d.company} <span class="edit-icon" onclick="editCompany(${i})" title="編輯公司名稱">✎</span></td>
+    <td style="color:var(--grey);">${d.addedAt}</td>
+    <td style="color:var(--grey);">${d.operator}</td>
+    <td><button class="remove-btn" onclick="removeDomain(${i})">移除</button></td>
+  </tr>`).join('');
+}
+const DOMAIN_FORMAT_RE = /^@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+function setDmErr(id, msg){
+  const el = document.getElementById(id), input = document.getElementById(id.replace('-err',''));
+  el.textContent = msg || ''; el.style.display = msg ? 'block' : 'none';
+  input.classList.toggle('invalid', !!msg);
+}
+function domainMsg(val, showEmpty){
+  if(!val){ return showEmpty ? '請輸入網域' : ''; }
+  if(!DOMAIN_FORMAT_RE.test(val)) return '網域格式不正確，請輸入「@」開頭的合法網域，例：@example.com.tw';
+  if(DOMAINS.some(d=>d.name.toLowerCase()===val.toLowerCase())) return '此網域已存在白名單中';
+  return '';
+}
+function companyMsg(val, showEmpty){
+  if(!val){ return showEmpty ? '請輸入公司名稱' : ''; }
+  if(val.length > 30) return '公司名稱請勿超過 30 字';
+  return '';
+}
+function validateDomainInput(){ setDmErr('dm-domain-err', domainMsg(document.getElementById('dm-domain').value.trim(), false)); }
+function validateCompanyInput(){ setDmErr('dm-company-err', companyMsg(document.getElementById('dm-company').value.trim(), false)); }
+function openAddDomain(){
+  ['dm-domain','dm-company'].forEach(id=>{ document.getElementById(id).value=''; setDmErr(id+'-err',''); });
+  openModal('modal-add-domain');
+  setTimeout(()=>document.getElementById('dm-domain').focus(), 50);
+}
+function confirmAddDomain(){
+  const domain = document.getElementById('dm-domain').value.trim();
+  const company = document.getElementById('dm-company').value.trim();
+  const dMsg = domainMsg(domain, true), cMsg = companyMsg(company, true);
+  setDmErr('dm-domain-err', dMsg); setDmErr('dm-company-err', cMsg);
+  if(dMsg || cMsg) return;
+  const n = new Date(), p = v=>String(v).padStart(2,'0');
+  const ts = `${n.getFullYear()}-${p(n.getMonth()+1)}-${p(n.getDate())} ${p(n.getHours())}:${p(n.getMinutes())}`;
+  DOMAINS.push({name:domain, company, addedAt:ts, operator:"王小明（目前登入管理員）"});
+  renderDomains();
+  closeModal('modal-add-domain');
+  showToast(`已新增白名單網域 ${domain}（${company}）`);
+}
+function removeDomain(i){ DOMAINS.splice(i,1); renderDomains(); }
+function editCompany(i){
+  renderDomains(); // 一次只編輯一列，其他列還原
+  const cell = document.getElementById('co-cell-'+i);
+  cell.innerHTML = `<div class="co-edit">
+      <input class="form-input co-input" id="co-input-${i}" maxlength="40" />
+      <button type="button" class="co-ok" onclick="saveCompany(${i})" title="儲存">✓</button>
+      <button type="button" class="co-cancel" onclick="renderDomains()" title="取消">✕</button>
+    </div><div class="field-err" id="co-err-${i}"></div>`;
+  const input = document.getElementById('co-input-'+i);
+  input.value = DOMAINS[i].company;
+  input.addEventListener('keydown', e=>{
+    if(e.key==='Enter'){ e.preventDefault(); saveCompany(i); }
+    else if(e.key==='Escape'){ renderDomains(); }
+  });
+  input.addEventListener('input', ()=>{ document.getElementById('co-err-'+i).style.display='none'; input.classList.remove('invalid'); });
+  input.focus(); input.select();
+}
+function saveCompany(i){
+  const input = document.getElementById('co-input-'+i), err = document.getElementById('co-err-'+i);
+  const v = input.value.trim();
+  const msg = !v ? '請輸入公司名稱' : (v.length > 30 ? '公司名稱請勿超過 30 字' : '');
+  if(msg){ err.textContent = msg; err.style.display = 'block'; input.classList.add('invalid'); input.focus(); return; }
+  DOMAINS[i].company = v;
+  renderDomains();
+  showToast('已更新公司名稱');
+}
+// 彈窗控制：確保點擊「＋ 新增網域」可正常開啟新增白名單網域視窗
+function openModal(id){
+  const modal = document.getElementById(id);
+  if(!modal) return;
+  modal.classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal(id){
+  const modal = document.getElementById(id);
+  if(!modal) return;
+  modal.classList.remove('show');
+  if(!document.querySelector('.modal-overlay.show')) document.body.style.overflow = '';
+}
+// 點擊彈窗外側可關閉，點擊內容區不關閉
+document.querySelectorAll('.modal-overlay').forEach(modal=>{
+  modal.addEventListener('click', event=>{
+    if(event.target === modal) closeModal(modal.id);
+  });
+});
+document.addEventListener('keydown', event=>{
+  if(event.key === 'Escape'){
+    document.querySelectorAll('.modal-overlay.show').forEach(modal=>closeModal(modal.id));
+  }
+});
+
+renderDomains();
+renderApCompanyChecks();
+renderQuotaTable();
+</script>
+</body>
+</html>

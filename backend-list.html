@@ -490,19 +490,23 @@ let pendingToggleIndex = null;
 function onToggleClick(i, el){
   const r = ADMIN_ROWS[i];
   if(r.active){
+    // 上架中：維持原本的下架確認警示
     pendingToggleIndex = i;
     document.getElementById('modal-unpublish-name').textContent = r.name;
     openModal('modal-unpublish');
   } else {
-    // 下架活動要重新上架：需進入活動設定頁面重新設定活動登記期間，其餘內容預設帶入原本的值
-    AN_MODE = 'edit';
-    renderAnProducts();
-      showToast('請先設定活動登記期間才能重新上架，已為您開啟活動設定頁面');
-    go('admin-new');
+    // 已下架：點擊灰色下架鈕，前往 backend-act.html
+    window.location.href = 'backend-act.html';
   }
 }
 document.getElementById('modal-unpublish').querySelector('.btn-primary').addEventListener('click', ()=>{
-  if(pendingToggleIndex!=null){ ADMIN_ROWS[pendingToggleIndex].active = false; closeModal('modal-unpublish'); renderAdminTable(); showToast('活動已下架'); }
+  if(pendingToggleIndex!=null){
+    ADMIN_ROWS[pendingToggleIndex].active = false;
+    pendingToggleIndex = null;
+    closeModal('modal-unpublish');
+    renderAdminTable();
+    showToast('活動已下架');
+  }
 });
 function openExportModal(name){
   document.getElementById('export-company').innerHTML = '<option>全部公司</option>' + DOMAINS.map(d=>`<option>${d.company}　${d.name}</option>`).join('');

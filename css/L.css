@@ -370,6 +370,14 @@ h1 {font-size:22px;line-height:32px; font-weight:700;margin:24px 0 6px 0;}
 .date-input input::-webkit-calendar-picker-indicator{cursor:pointer;opacity:.6;}
 .date-input input[data-dp="datetime"]{width:178px;}
 .date-input:focus-within{border-color:var(--navy);}
+.date-input2{display:flex;align-items:center;background:#fff;border:1px solid var(--border);border-radius:8px;padding:6px 10px;cursor:pointer;}
+.date-input2 input{border:none;outline:none;background:transparent;font-family:inherit;font-size:12.5px;color:var(--navy-dark);cursor:pointer;}
+.date-input2 input::-webkit-calendar-picker-indicator{cursor:pointer;opacity:.6;}
+.date-input2 input[data-dp="datetime"]{width:178px;}
+.date-input2:focus-within{border-color:var(--navy);}
+.date-input2 .blacktxt {color:#333333!important;}
+.date-input2 .blacktxt::placeholder{color:#333333!important;}
+
 .dp-field,.date-input input[data-dp]{cursor:pointer;}
 #dp-pop{position:fixed;z-index:1200;display:none;width:268px;background:#fff;border:1px solid var(--border);border-radius:12px;box-shadow:0 12px 34px rgba(20,30,50,.22);padding:12px;font-size:12px;user-select:none;}
 #dp-pop.show{display:block;}
@@ -524,12 +532,19 @@ h1 {font-size:22px;line-height:32px; font-weight:700;margin:24px 0 6px 0;}
 #ap-fields.readonly{pointer-events:none;opacity:.68;}
 #ap-fields.readonly .form-input, #ap-fields.readonly input, #ap-fields.readonly textarea{background:var(--bg-alt);}
 
-
 /* 新增活動表單 */
 .form-field{margin-bottom:18px;}
 .form-field label{display:block;font-size:12px;font-weight:700;margin-bottom:8px;}
 .form-field label .req{color:var(--orange);}
 .form-input{width:100%;padding:11px 14px;border-radius:8px;border:1.3px solid var(--border);font-size:12.5px;}
+.form-field2{margin-bottom:18px;}
+.form-field2 label{display:block;font-size:12px;font-weight:700;margin-bottom:8px;}
+.form-field2 label .req{color:var(--orange);}
+.form-input2{width:100%;padding:11px 14px;border-radius:8px;border:1.3px solid var(--border);font-size:12.5px;}
+.form-field2 .form-input2::placeholder{color:#333333!important;}
+.form-field2 #an-notes::placeholder{color:#333333!important;}
+
+
 .form-row2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
 .cb-row{display:flex;align-items:center;gap:8px;margin-bottom:9px;cursor:pointer;font-size:12.5px;}
 .quota-table{width:100%;border-collapse:collapse;margin-top:8px;}
@@ -608,3 +623,5 @@ h1 {font-size:22px;line-height:32px; font-weight:700;margin:24px 0 6px 0;}
 #page-content .goods{
   overflow:visible !important;
 }
+
+

@@ -75,29 +75,29 @@
           <div class="ttl">基本資訊設定</div>
           <div class="sub">設定活動的基本資訊，商品 Banner 連結將套用於前台所有使用到此活動商品圖片的地方</div>
 
-          <div class="form-field">
+          <div class="form-field2">
             <label>活動名稱 <span class="req">＊</span></label>
-            <input class="form-input" id="an-name" placeholder="中秋節大巨蛋球賽員工領票" />
+            <input class="form-input2" id="an-name" placeholder="中秋節大巨蛋球賽員工領票" />
           </div>
 
-          <div class="form-field">
+          <div class="form-field2">
             <label>商品 Banner（圖片連結）</label>
-            <input class="form-input" id="an-banner" placeholder="https://image.mycard520.com/Customized/Dungeon_Fighter/img/uid_001.png" oninput="validateBanner()" />
+            <input class="form-input2" id="an-banner" placeholder="https://image.mycard520.com/Customized/Dungeon_Fighter/img/uid_001.png" oninput="validateBanner()" />
             <div id="an-banner-error" style="display:none;font-size:10.5px;color:var(--red);margin-top:6px;">連結需以 http:// 或 https:// 開頭，請確認網址格式</div>
             <div style="font-size:10.5px;color:var(--grey-light);margin-top:6px;">活動內所有使用到商品 Banner 的圖片，都會套用此連結顯示；未設定時使用系統預設圖片。建議圖片尺寸：1400 × 800</div>
           </div>
 
-          <div class="form-field">
+          <div class="form-field2">
             <label>活動登記期間 <span class="req">＊</span></label>
             <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
-              <label class="date-input"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex:none;color:var(--grey-light);position:relative;margin:0px 6px -2px 0;"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg><input type="text" data-dp="datetime" readonly placeholder="2026-10-13  9:00" id="an-date-from" onchange="validateAnDates()" /></label>
+              <label class="date-input2"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex:none;color:var(--grey-light);position:relative;margin:0px 6px -2px 0;"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg><input class="blacktxt" type="text" data-dp="datetime" readonly placeholder="2026-10-13  9:00" id="an-date-from" onchange="validateAnDates()" /></label>
               <span style="color:var(--grey-light);">至</span>
-              <label class="date-input"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex:none;color:var(--grey-light);position:relative;margin:0px 6px -2px 0;"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg><input type="text" data-dp="datetime" readonly placeholder="2026-10-28  18:00" id="an-date-to" onchange="validateAnDates()" /></label>
+              <label class="date-input2"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex:none;color:var(--grey-light);position:relative;margin:0px 6px -2px 0;"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg><input class="blacktxt" type="text" data-dp="datetime" readonly placeholder="2026-10-28  18:00" id="an-date-to" onchange="validateAnDates()" /></label>
             </div>
             <div id="an-date-error" style="display:none;font-size:10.5px;color:var(--red);margin-top:6px;"></div>
           </div>
 
-          <div class="form-field">
+          <div class="form-field2">
             <label>活動注意事項／說明撰寫</label>
             <div style="border:1.3px solid var(--border);border-radius:8px;overflow:hidden;">
               <div style="background:var(--bg-alt);padding:8px 12px;display:flex;gap:14px;font-size:13px;color:var(--grey);border-bottom:1px solid var(--border);">

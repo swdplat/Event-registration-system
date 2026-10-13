@@ -446,8 +446,10 @@ function getFilteredAdminRows(){
 }
 function renderAdminTable(){
   const tbody = document.getElementById('admin-table-body');
+  if(!tbody) return; // 此頁面未包含活動列表區塊時略過，避免中斷後續腳本
   const filtered = getFilteredAdminRows();
-  document.getElementById('admin-row-count').textContent = `共 ${filtered.length} 筆資料（示範資料，實際以後端為準）`;
+  const rowCountEl = document.getElementById('admin-row-count');
+  if(rowCountEl) rowCountEl.textContent = `共 ${filtered.length} 筆資料（示範資料，實際以後端為準）`;
   if(filtered.length === 0){
     tbody.innerHTML = `<tr><td colspan="8" style="text-align:center;color:var(--grey-light);padding:24px 0;">查無符合條件的活動</td></tr>`;
     return;
@@ -554,7 +556,7 @@ setInterval(()=>{
       changed = true;
     }
   });
-  if(changed && document.getElementById('page-admin-list').classList.contains('active')) renderAdminTable();
+  if(changed && document.getElementById('page-admin-list')?.classList.contains('active')) renderAdminTable();
 }, 30000);
 
 /* ============ 6a. 新增活動：基本資訊設定 ============ */
@@ -798,6 +800,7 @@ let DOMAINS = [
 ];
 function renderDomains(){
   const body = document.getElementById('domain-body');
+  if(!body) return;
   body.innerHTML = DOMAINS.map((d,i)=>`<tr>
     <td><span class="dom-check">✓</span><b>${d.name}</b></td>
     <td id="co-cell-${i}">${d.company} <span class="edit-icon" onclick="editCompany(${i})" title="編輯公司名稱">✎</span></td>
